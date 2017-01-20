@@ -22,6 +22,6 @@ foreach($userlist as $user)
 }
 
 $user_content = $urban_template->merge("views/userlist_row", $user_templates);
-$urban_template->with("users", $user_content)->append($urban_template->view("views/userlist"));
+$urban_template->with("users", $user_content)->append_to_layout($urban_template->view("views/userlist"));
 
 echo $urban_template->with("title", "User List")->view("views/layouts/layout");

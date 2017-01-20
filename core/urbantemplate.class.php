@@ -11,8 +11,8 @@ class UrbanTemplate
     return $this;
   }
 
-  public function append($value)
-  {
+  public function append_to_layout($value)
+  {      
       $this->_variable['content'] = $value;
   }
 
