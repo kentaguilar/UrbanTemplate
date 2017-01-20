@@ -2,14 +2,10 @@
 
 require_once("core/urbantemplate.class.php");
 
-$profile = new UrbanTemplate("views/profile");
-$profile->set("username", "pogi");
-$profile->set("name", "Pogi points");
-$profile->set("age", "26");
-$profile->set("location", "Davao");
+$urban_template = new UrbanTemplate();
 
-$layout = new UrbanTemplate("views/layouts/layout");
-$layout->set("title", "My User Profile");
-$layout->set("content", $profile->output());
+$urban_template->with("username", "pogi")->with("name", "Pogi points")
+  ->with("age", "26")->with("location", "Davao")->with("title", "User Profile");
+$urban_template->append($urban_template->view("views/profile"));
 
-echo $layout->output();
+echo $urban_template->with("title", "User Profile")->view("views/layouts/layout");

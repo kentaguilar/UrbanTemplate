@@ -8,24 +8,20 @@ $userlist = array(
   array("username" => "Jimmy Stevens", "location" => "3048 E Santa Ana St"),
 );
 
+$urban_template = new UrbanTemplate();
+
 foreach($userlist as $user)
 {
-  $row = new UrbanTemplate("views/userlist_row");
+  $row_template = new UrbanTemplate();
   foreach($user as $key => $value)
   {
-    $row->set($key, $value);
+    $row_template->with($key, $value);
   }
 
-  $usersTemplates[] = $row;
+  $user_templates[] = $row_template;
 }
 
-$usersContents = UrbanTemplate::merge($usersTemplates);
+$user_content = $urban_template->merge("views/userlist_row", $user_templates);
+$urban_template->with("users", $user_content)->append($urban_template->view("views/userlist"));
 
-$usersList = new UrbanTemplate("views/userlist");
-$usersList->set("users", $usersContents);
-
-$layout = new UrbanTemplate("views/layouts/layout");
-$layout->set("title", "User List");
-$layout->set("content", $usersList->output());
-
-echo $layout->output();
+echo $urban_template->with("title", "User List")->view("views/layouts/layout");

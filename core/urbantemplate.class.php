@@ -2,28 +2,31 @@
 
 class UrbanTemplate
 {
-  protected $file;
-  protected $values = array();
+  protected $_layout;
+  protected $_variables = array();
 
-  public function __construct($file)
+  public function with($key, $value)
   {
-    $this->file = $file . ".urban.php";
+    $this->_variable[$key] = $value;
+    return $this;
   }
 
-  public function set($key, $value)
+  public function append($value)
   {
-    $this->values[$key] = $value;
+      $this->_variable['content'] = $value;
   }
 
-  public function output()
+  public function view($layout)
   {
-    if(!file_exists($this->file))
+    $this->_layout = $layout . ".urban.php";
+
+    if(!file_exists($this->_layout))
     {
-      return "[Error loading template file (" . $this->file . ")]";
+      return "[Error loading template file (" . $this->_layout . ")]";
     }
 
-    $output = file_get_contents($this->file);
-    foreach($this->values as $key => $value)
+    $output = file_get_contents($this->_layout);
+    foreach($this->_variable as $key => $value)
     {
       $tagToReplace = "[@$key]";
       $output = str_replace($tagToReplace, $value, $output);
@@ -32,13 +35,13 @@ class UrbanTemplate
     return $output;
   }
 
-  public static function merge($templates, $separator = "\r\n")
+  public function merge($layout, $templates, $separator = "\n")
   {
     $output = "";
     foreach($templates as $template)
     {
       $content = (get_class($template) !== "UrbanTemplate")
-                ? "[Error, incorrect type - expected template]" : $template->output();
+                ? "[Error, incorrect type - expected template]" : $template->view($layout);
       $output .= $content . $separator;
     }
 
