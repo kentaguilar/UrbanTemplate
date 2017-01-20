@@ -7,6 +7,9 @@
 
   </head>
   <body>
-
+    <h2>Urban Template</h2>
+    <div id="content">
+      [@content]
+    </div>
   </body>
 </html>

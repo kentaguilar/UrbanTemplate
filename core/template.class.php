@@ -41,7 +41,7 @@ class Template
     {
         $content = (get_class($template) !== "Template")
                     ? "Error, incorrect type - expected template." : $template->output();
-        $output .= $content . $separator
+        $output .= $content . $separator;
     }
 
     return $output;
