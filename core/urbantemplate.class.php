@@ -12,7 +12,7 @@ class UrbanTemplate
   }
 
   public function append_to_layout($value)
-  {      
+  {
       $this->_variable['content'] = $value;
   }
 
@@ -35,13 +35,14 @@ class UrbanTemplate
     return $output;
   }
 
-  public function merge($layout, $templates, $separator = "\n")
+  public function addDataToGridLayout($layout, $templates, $separator = "\n")
   {
     $output = "";
     foreach($templates as $template)
     {
       $content = (get_class($template) !== "UrbanTemplate")
                 ? "[Error, incorrect type - expected template]" : $template->view($layout);
+      // var_dump($template);
       $output .= $content . $separator;
     }
 

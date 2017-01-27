@@ -21,7 +21,11 @@ foreach($userlist as $user)
   $user_templates[] = $row_template;
 }
 
-$user_content = $urban_template->merge("views/userlist_row", $user_templates);
+//form grid content
+$user_content = $urban_template->addDataToGridLayout("views/userlist_row", $user_templates);
+
+//add grid content to main view
 $urban_template->with("users", $user_content)->append_to_layout($urban_template->view("views/userlist"));
 
+//add main view to layout
 echo $urban_template->with("title", "User List")->view("views/layouts/layout");
